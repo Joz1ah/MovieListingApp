@@ -1,75 +1,185 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useRouter } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
+import React, { useEffect, useState } from 'react';
+import {
+  ActivityIndicator,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+import MovieCarousel from '../../components/MovieCarousel';
+import { useAppSelector } from '../../store';
+import {
+  useGetPopularMoviesQuery,
+  useGetTopRatedMoviesQuery,
+  useGetTrendingMoviesQuery,
+} from '../../store/api/movieApi';
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const [mounted, setMounted] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Safe mounting
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMounted(true);
+    }, 100);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Safe auth check
+  const { isAuthenticated } = useAppSelector(state => 
+    mounted ? state.auth : { isAuthenticated: true }
+  );
+
+  // Safe navigation
+  useEffect(() => {
+    if (mounted && !isAuthenticated) {
+      const timer = setTimeout(() => {
+        router.replace('/(auth)/login');
+      }, 100);
+      
+      return () => clearTimeout(timer);
+    }
+  }, [mounted, isAuthenticated, router]);
+
+  // API queries
+  const { data: trendingData, refetch: refetchTrending, isLoading: trendingLoading } = useGetTrendingMoviesQuery(undefined, {
+    skip: !mounted
+  });
+  const { data: popularData, refetch: refetchPopular, isLoading: popularLoading } = useGetPopularMoviesQuery(undefined, {
+    skip: !mounted
+  });
+  const { data: topRatedData, refetch: refetchTopRated, isLoading: topRatedLoading } = useGetTopRatedMoviesQuery(undefined, {
+    skip: !mounted
+  });
+
+  const handleRefresh = async () => {
+    if (!mounted) return;
+    setRefreshing(true);
+    await Promise.all([refetchTrending(), refetchPopular(), refetchTopRated()]);
+    setRefreshing(false);
+  };
+
+  if (!mounted) {
+    return (
+      <LinearGradient colors={['#000000', '#111111']} style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ff6b9d" />
+        <Text style={styles.loadingText}>Loading CinemaScope...</Text>
+      </LinearGradient>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
+    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+      <StatusBar style="light" backgroundColor="#000000" />
+      
+      {/* Header with Gradient */}
+      <LinearGradient
+        colors={['#111111', '#1a1a1a']}
+        style={styles.header}
+      >
+        <LinearGradient
+          colors={['#ffffff', '#ff6b9d', '#4ecdc4']}
+          style={styles.titleGradient}
+        >
+          <Text style={styles.headerTitle}>CinemaScope</Text>
+        </LinearGradient>
+        <Text style={styles.headerSubtitle}>Discover Amazing Movies</Text>
+      </LinearGradient>
+
+      <ScrollView
+        style={styles.content}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={handleRefresh}
+            tintColor="#ff6b9d"
+            colors={['#ff6b9d']}
+          />
+        }
+      >
+        {/* Trending Movies */}
+        <MovieCarousel
+          movies={trendingData?.results || []}
+          title="🔥 Trending Now"
+          loading={trendingLoading}
         />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+
+        {/* Popular Movies */}
+        <MovieCarousel
+          movies={popularData?.results || []}
+          title="⭐ Popular Movies"
+          loading={popularLoading}
+        />
+
+        {/* Top Rated Movies */}
+        <MovieCarousel
+          movies={topRatedData?.results || []}
+          title="🏆 Top Rated"
+          loading={topRatedLoading}
+        />
+        
+        <View style={styles.bottomSpacing} />
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
   },
-  stepContainer: {
-    gap: 8,
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 16,
+    color: '#b3b3b3',
+  },
+  header: {
+    paddingHorizontal: 16,
+    paddingTop: 60,
+    paddingBottom: 24,
+    borderBottomWidth: 1,
+    borderBottomColor: '#333333',
+    alignItems: 'center',
+  },
+  titleGradient: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 25,
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  headerTitle: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#000000',
+    textAlign: 'center',
+  },
+  headerSubtitle: {
+    fontSize: 16,
+    color: '#b3b3b3',
+    textAlign: 'center',
+  },
+  content: {
+    flex: 1,
+    paddingTop: 24,
+  },
+  bottomSpacing: {
+    height: 32,
   },
 });
