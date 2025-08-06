@@ -1,16 +1,18 @@
+// Fixed app/(tabs)/mylist.tsx - Clean gradient text without background
+
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
-    Dimensions,
-    FlatList,
-    RefreshControl,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import MovieCard from '../../components/MovieCard';
 import { useAppDispatch, useAppSelector } from '../../store';
@@ -75,17 +77,9 @@ export default function MyListScreen() {
     <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header - CONSISTENT WITH OTHER TABS */}
-      <LinearGradient
-        colors={['#111111', '#1a1a1a']}
-        style={styles.header}
-      >
-        <LinearGradient
-          colors={['#ffffff', '#ff6b9d', '#4ecdc4']}
-          style={styles.titleGradient}
-        >
-          <Text style={styles.headerTitle}>My List</Text>
-        </LinearGradient>
+      {/* Header - Clean with gradient text effect */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>My List</Text>
         <Text style={styles.headerSubtitle}>
           {favoriteMovies.length} movie{favoriteMovies.length !== 1 ? 's' : ''}
         </Text>
@@ -100,7 +94,7 @@ export default function MyListScreen() {
             </LinearGradient>
           </TouchableOpacity>
         )}
-      </LinearGradient>
+      </View>
 
       {favoriteMovies.length === 0 ? (
         /* Empty State */
@@ -156,17 +150,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333333',
     alignItems: 'center',
   },
-  titleGradient: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 25,
-    marginBottom: 8,
-  },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000000',
+    color: '#ffffff',
     textAlign: 'center',
+    marginBottom: 8,
+    textShadowColor: '#ffffff',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,

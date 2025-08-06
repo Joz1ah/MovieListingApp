@@ -1,3 +1,5 @@
+// Updated components/MovieCard.tsx with larger card sizes to show full images
+
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
@@ -29,7 +31,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress, size = 'medium' }
   };
 
   const imageUrl = movie.poster_path 
-    ? `https://image.tmdb.org/t/p/w342${movie.poster_path}`
+    ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
     : 'https://via.placeholder.com/300x450/333333/ffffff?text=No+Image';
 
   const formatDate = (dateString: string): string => {
@@ -46,10 +48,18 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress, size = 'medium' }
     return rating.toFixed(1);
   };
 
+  // Updated card sizes to be larger and maintain aspect ratio
   const cardStyles = {
-    small: { width: 120, height: 180 },
-    medium: { width: 150, height: 220 },
-    large: { width: 180, height: 270 },
+    small: { width: 140, height: 240 },
+    medium: { width: 170, height: 280 },
+    large: { width: 200, height: 320 },
+  };
+
+  // Poster aspect ratio is typically 2:3, so adjust accordingly
+  const posterStyles = {
+    small: { height: 190 },
+    medium: { height: 215 },
+    large: { height: 240 },
   };
 
   return (
@@ -62,7 +72,7 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress, size = 'medium' }
       <View style={styles.imageContainer}>
         <Image 
           source={{ uri: imageUrl }} 
-          style={styles.poster}
+          style={[styles.poster, posterStyles[size]]}
           resizeMode="cover"
         />
         
@@ -110,13 +120,12 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress, size = 'medium' }
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#1a1a1a',
-    borderRadius: 12,
     marginRight: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 4.65,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 6 },
+    shadowOpacity: 0.6,
+    shadowRadius: 8,
+    elevation: 10,
     overflow: 'hidden',
     borderWidth: 1,
     borderColor: '#333333',
@@ -127,7 +136,6 @@ const styles = StyleSheet.create({
   },
   poster: {
     width: '100%',
-    flex: 1,
     backgroundColor: '#333333',
   },
   favoriteButton: {
@@ -144,7 +152,8 @@ const styles = StyleSheet.create({
   },
   movieInfo: {
     padding: 12,
-    height: 70,
+    paddingTop: 0,
+    height: 65,
   },
   title: {
     fontSize: 14,

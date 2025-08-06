@@ -1,5 +1,7 @@
+// Fixed store/authSlice.ts - Proper async handling
+
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import * as SecureStore from 'expo-secure-store';
+import { clearStoredToken } from '../utils/auth';
 import { AuthState, User } from '../utils/types';
 
 const initialState: AuthState = {
@@ -23,9 +25,13 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.token = action.payload.token;
+      state.error = null;
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.loading = false;
+      state.isAuthenticated = false;
+      state.user = null;
+      state.token = null;
       state.error = action.payload;
     },
     logout: (state) => {
@@ -33,11 +39,21 @@ const authSlice = createSlice({
       state.user = null;
       state.token = null;
       state.error = null;
-      SecureStore.deleteItemAsync('authToken');
+      state.loading = false;
+      // Clear stored token asynchronously
+      clearStoredToken().catch(console.error);
     },
     loadStoredAuth: (state, action: PayloadAction<string>) => {
       state.isAuthenticated = true;
       state.token = action.payload;
+      state.loading = false;
+      state.error = null;
+      // Set a mock user for stored token
+      state.user = {
+        id: '1',
+        email: 'user@example.com',
+        name: 'Test User'
+      };
     },
     clearError: (state) => {
       state.error = null;

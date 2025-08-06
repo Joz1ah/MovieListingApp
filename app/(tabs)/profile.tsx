@@ -1,15 +1,17 @@
+// Fixed app/(tabs)/profile.tsx - Changed to dark theme like other tabs
+
 import { Ionicons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import {
-    Alert,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Alert,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useAppDispatch, useAppSelector } from '../../store';
 import { logout } from '../../store/authSlice';
@@ -36,7 +38,7 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
         <Ionicons 
           name={icon} 
           size={24} 
-          color={destructive ? '#ff3b30' : '#007AFF'} 
+          color={destructive ? '#ff6b9d' : '#4ecdc4'} 
         />
       </View>
       <View style={styles.optionText}>
@@ -48,7 +50,7 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
         )}
       </View>
     </View>
-    <Ionicons name="chevron-forward" size={20} color="#aeaeb2" />
+    <Ionicons name="chevron-forward" size={20} color="#666666" />
   </TouchableOpacity>
 );
 
@@ -126,28 +128,20 @@ export default function ProfileScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" backgroundColor="#f8f9fa" />
+    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+      <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header with Gradient */}
-      <LinearGradient
-        colors={['#f8f9fa', '#ffffff']}
-        style={styles.header}
-      >
-        <LinearGradient
-          colors={['#ff3b30', '#ff9500']}
-          style={styles.titleGradient}
-        >
-          <Text style={styles.headerTitle}>Profile</Text>
-        </LinearGradient>
+      {/* Header - Dark theme with gradient text effect */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Profile</Text>
         <Text style={styles.headerSubtitle}>Manage your account</Text>
-      </LinearGradient>
+      </View>
 
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* User Info Card */}
         <View style={styles.userCard}>
           <LinearGradient
-            colors={['#007AFF', '#5856d6']}
+            colors={['#ff6b9d', '#4ecdc4']}
             style={styles.avatarContainer}
           >
             <Ionicons name="person" size={40} color="white" />
@@ -158,7 +152,7 @@ export default function ProfileScreen() {
             <Text style={styles.userEmail}>{user?.email || 'user@example.com'}</Text>
             <View style={styles.favoriteCountContainer}>
               <LinearGradient
-                colors={['#34c759', '#00d4ff']}
+                colors={['#4ecdc4', '#ff6b9d']}
                 style={styles.favoriteCountBadge}
               >
                 <Text style={styles.favoriteCount}>
@@ -230,38 +224,35 @@ export default function ProfileScreen() {
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
   },
   header: {
     paddingHorizontal: 16,
     paddingTop: 60,
     paddingBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
+    borderBottomColor: '#333333',
     alignItems: 'center',
-  },
-  titleGradient: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 25,
-    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#ffffff',
-    textAlign: 'center',
+    marginBottom: 8,
+    textShadowColor: '#ffffff',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#8e8e93',
+    color: '#b3b3b3',
     textAlign: 'center',
   },
   content: {
@@ -270,15 +261,12 @@ const styles = StyleSheet.create({
   userCard: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1a1a1a',
     margin: 16,
     padding: 24,
     borderRadius: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    borderWidth: 1,
+    borderColor: '#333333',
   },
   avatarContainer: {
     width: 80,
@@ -294,12 +282,12 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#1c1c1e',
+    color: '#ffffff',
     marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
-    color: '#8e8e93',
+    color: '#b3b3b3',
     marginBottom: 12,
   },
   favoriteCountContainer: {
@@ -322,7 +310,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 16,
     fontWeight: 'bold',
-    color: '#8e8e93',
+    color: '#666666',
     marginBottom: 12,
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -331,15 +319,12 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#ffffff',
+    backgroundColor: '#1a1a1a',
     padding: 16,
     borderRadius: 12,
     marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
+    borderWidth: 1,
+    borderColor: '#333333',
   },
   optionLeft: {
     flexDirection: 'row',
@@ -350,13 +335,13 @@ const styles = StyleSheet.create({
     width: 44,
     height: 44,
     borderRadius: 22,
-    backgroundColor: '#f8f9fa',
+    backgroundColor: '#2a2a2a',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
   destructiveIcon: {
-    backgroundColor: '#ffebea',
+    backgroundColor: '#2a1a1a',
   },
   optionText: {
     flex: 1,
@@ -364,15 +349,15 @@ const styles = StyleSheet.create({
   optionTitle: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#1c1c1e',
+    color: '#ffffff',
     marginBottom: 2,
   },
   destructiveText: {
-    color: '#ff3b30',
+    color: '#ff6b9d',
   },
   optionSubtitle: {
     fontSize: 14,
-    color: '#8e8e93',
+    color: '#b3b3b3',
   },
   bottomSpacing: {
     height: 32,

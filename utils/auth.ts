@@ -1,6 +1,7 @@
+// Fixed utils/auth.ts - Proper async handling to fix console errors
+
 import * as SecureStore from 'expo-secure-store';
 import { User } from './types';
-
 
 export interface AuthResult {
   success: boolean;
@@ -11,6 +12,9 @@ export interface AuthResult {
 
 export const authenticateUser = async (): Promise<AuthResult> => {
   try {
+    // Simulate network delay for realistic auth flow
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
     // For now, return a mock successful authentication
     // In a real app, you would implement proper OAuth2 flow using useAuthRequest hook
     const mockToken = 'mock_token_' + Date.now();
@@ -29,6 +33,7 @@ export const authenticateUser = async (): Promise<AuthResult> => {
       user: mockUser,
     };
   } catch (error) {
+    console.error('Authentication error:', error);
     return { 
       success: false, 
       error: error instanceof Error ? error.message : 'Authentication failed' 

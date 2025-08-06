@@ -6,15 +6,11 @@ export const theme = {
       card: '#1a1a1a',
       border: '#333333',
       
-      // Gradient colors (white to pink to blue)
-      gradientStart: '#ffffff',
-      gradientMid: '#ff6b9d',
-      gradientEnd: '#4ecdc4',
-      
       // Text colors
       text: '#ffffff',
       textSecondary: '#b3b3b3',
       textMuted: '#666666',
+      textShadow: '#ffffff',
       
       // Status colors
       success: '#10dc60',
@@ -24,13 +20,6 @@ export const theme = {
       // Special
       overlay: 'rgba(0, 0, 0, 0.8)',
       shadow: 'rgba(0, 0, 0, 0.3)',
-    },
-    
-    gradients: {
-      primary: ['#ffffff', '#ff6b9d', '#4ecdc4'],
-      secondary: ['#ff6b9d', '#4ecdc4'],
-      accent: ['#4ecdc4', '#45b7d1'],
-      header: ['#111111', '#1a1a1a'],
     },
     
     spacing: {

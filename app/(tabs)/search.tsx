@@ -1,19 +1,21 @@
+// Fixed app/(tabs)/search.tsx - Changed to dark theme like other tabs
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
-    RefreshControl,
-    ScrollView,
-    StyleSheet,
-    Text,
-    View,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
 } from 'react-native';
 import MovieCarousel from '../../components/MovieCarousel';
 import SearchBar from '../../components/SearchBar';
 import { useAppDispatch, useAppSelector } from '../../store';
 import {
-    useGetUpcomingMoviesQuery,
-    useSearchMoviesQuery,
+  useGetUpcomingMoviesQuery,
+  useSearchMoviesQuery,
 } from '../../store/api/movieApi';
 import { setSearchQuery } from '../../store/movieSlice';
 
@@ -38,22 +40,14 @@ export default function SearchScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" backgroundColor="#f8f9fa" />
+    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+      <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header */}
-      <LinearGradient
-        colors={['#f8f9fa', '#ffffff']}
-        style={styles.header}
-      >
-        <LinearGradient
-          colors={['#34c759', '#00d4ff']}
-          style={styles.titleGradient}
-        >
-          <Text style={styles.headerTitle}>Search</Text>
-        </LinearGradient>
+      {/* Header - Dark theme with gradient text effect */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Search</Text>
         <Text style={styles.headerSubtitle}>Find your next favorite film</Text>
-      </LinearGradient>
+      </View>
 
       {/* Search Bar */}
       <View style={styles.searchContainer}>
@@ -71,7 +65,8 @@ export default function SearchScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            colors={['#34c759']}
+            tintColor="#ff6b9d"
+            colors={['#ff6b9d']}
           />
         }
       >
@@ -79,7 +74,8 @@ export default function SearchScreen() {
         {searchQuery && (
           <MovieCarousel
             movies={searchData?.results || []}
-            title={`🔍 Results for "${searchQuery}"`}
+            title={`Results for "${searchQuery}"`}
+            icon="search"
             loading={searchLoading}
           />
         )}
@@ -87,44 +83,43 @@ export default function SearchScreen() {
         {/* Coming Soon Movies */}
         <MovieCarousel
           movies={upcomingData?.results || []}
-          title="🎬 Coming Soon"
+          title="Coming Soon"
+          icon="calendar"
           loading={upcomingLoading}
         />
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f8f9fa',
   },
   header: {
     paddingHorizontal: 16,
     paddingTop: 60,
     paddingBottom: 24,
     borderBottomWidth: 1,
-    borderBottomColor: '#e9ecef',
+    borderBottomColor: '#333333',
     alignItems: 'center',
-  },
-  titleGradient: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 25,
-    marginBottom: 8,
   },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#ffffff',
     textAlign: 'center',
+    color: '#ffffff',
+    marginBottom: 8,
+    textShadowColor: '#ffffff',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,
-    color: '#8e8e93',
+    color: '#b3b3b3',
     textAlign: 'center',
   },
   searchContainer: {

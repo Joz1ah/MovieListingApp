@@ -1,3 +1,5 @@
+// Fixed app/(tabs)/index.tsx - Using simple gradient text approach
+
 import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
@@ -83,19 +85,11 @@ export default function HomeScreen() {
     <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header with Gradient */}
-      <LinearGradient
-        colors={['#111111', '#1a1a1a']}
-        style={styles.header}
-      >
-        <LinearGradient
-          colors={['#ffffff', '#ff6b9d', '#4ecdc4']}
-          style={styles.titleGradient}
-        >
-          <Text style={styles.headerTitle}>CinemaScope</Text>
-        </LinearGradient>
+      {/* Header - Clean with gradient text effect using shadow/glow */}
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>CinemaScope</Text>
         <Text style={styles.headerSubtitle}>Discover Amazing Movies</Text>
-      </LinearGradient>
+      </View>
 
       <ScrollView
         style={styles.content}
@@ -112,21 +106,24 @@ export default function HomeScreen() {
         {/* Trending Movies */}
         <MovieCarousel
           movies={trendingData?.results || []}
-          title="🔥 Trending Now"
+          title="Trending Now"
+          icon="trending-up"
           loading={trendingLoading}
         />
 
         {/* Popular Movies */}
         <MovieCarousel
           movies={popularData?.results || []}
-          title="⭐ Popular Movies"
+          title="Popular Movies"
+          icon="star"
           loading={popularLoading}
         />
 
         {/* Top Rated Movies */}
         <MovieCarousel
           movies={topRatedData?.results || []}
-          title="🏆 Top Rated"
+          title="Top Rated"
+          icon="trophy"
           loading={topRatedLoading}
         />
         
@@ -158,17 +155,16 @@ const styles = StyleSheet.create({
     borderBottomColor: '#333333',
     alignItems: 'center',
   },
-  titleGradient: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 25,
-    marginBottom: 8,
-  },
   headerTitle: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000000',
     textAlign: 'center',
+    color: '#ffffff',
+    marginBottom: 8,
+    textShadowColor: '#ffffff',
+    textShadowOffset: { width: 0, height: 0 },
+    textShadowRadius: 10,
+    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,
