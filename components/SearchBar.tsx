@@ -40,7 +40,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           returnKeyType="search"
           autoCapitalize="none"
           autoCorrect={false}
-          selectionColor="#667eea"
+          selectionColor="#ffffff"
         />
         {value.length > 0 && (
           <TouchableOpacity 
@@ -64,12 +64,12 @@ const styles = StyleSheet.create({
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1a1a2e',
-    borderRadius: 20,
+    backgroundColor: '#1a1a1a',
+    borderRadius: 12,
     paddingHorizontal: 16,
     height: 50,
     borderWidth: 1,
-    borderColor: '#16213e',
+    borderColor: '#333333',
   },
   searchIcon: {
     marginRight: 8,

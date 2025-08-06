@@ -1,6 +1,3 @@
-// Fixed app/(tabs)/index.tsx - Using simple gradient text approach
-
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useEffect, useState } from 'react';
@@ -70,10 +67,10 @@ export default function HomeScreen() {
 
   if (!mounted) {
     return (
-      <LinearGradient colors={['#000000', '#111111']} style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#ff6b9d" />
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#ffffff" />
         <Text style={styles.loadingText}>Loading CinemaScope...</Text>
-      </LinearGradient>
+      </View>
     );
   }
 
@@ -82,10 +79,10 @@ export default function HomeScreen() {
   }
 
   return (
-    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header - Clean with gradient text effect using shadow/glow */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>CinemaScope</Text>
         <Text style={styles.headerSubtitle}>Discover Amazing Movies</Text>
@@ -98,8 +95,8 @@ export default function HomeScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#ff6b9d"
-            colors={['#ff6b9d']}
+            tintColor="#ffffff"
+            colors={['#ffffff']}
           />
         }
       >
@@ -129,18 +126,20 @@ export default function HomeScreen() {
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000000',
   },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#000000',
   },
   loadingText: {
     marginTop: 16,
@@ -161,10 +160,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
     marginBottom: 8,
-    textShadowColor: '#ffffff',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,

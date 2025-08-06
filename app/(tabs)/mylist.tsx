@@ -1,7 +1,4 @@
-// Fixed app/(tabs)/mylist.tsx - Clean gradient text without background
-
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
@@ -74,10 +71,10 @@ export default function MyListScreen() {
   );
 
   return (
-    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header - Clean with gradient text effect */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>My List</Text>
         <Text style={styles.headerSubtitle}>
@@ -86,12 +83,7 @@ export default function MyListScreen() {
         
         {favoriteMovies.length > 0 && (
           <TouchableOpacity onPress={handleClearAll} style={styles.clearButton}>
-            <LinearGradient
-              colors={['#ff6b9d', '#4ecdc4']}
-              style={styles.clearButtonGradient}
-            >
-              <Text style={styles.clearButtonText}>Clear All</Text>
-            </LinearGradient>
+            <Text style={styles.clearButtonText}>Clear All</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -99,16 +91,13 @@ export default function MyListScreen() {
       {favoriteMovies.length === 0 ? (
         /* Empty State */
         <View style={styles.emptyContainer}>
-          <LinearGradient
-            colors={['#ffffff', '#ff6b9d', '#4ecdc4']}
-            style={styles.emptyIconContainer}
-          >
+          <View style={styles.emptyIconContainer}>
             <Ionicons 
               name="heart-outline" 
               size={60} 
-              color="#000000"
+              color="#ffffff"
             />
-          </LinearGradient>
+          </View>
           
           <Text style={styles.emptyTitle}>No favorites yet</Text>
           <Text style={styles.emptySubtitle}>
@@ -128,19 +117,20 @@ export default function MyListScreen() {
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              tintColor="#ff6b9d"
-              colors={['#ff6b9d']}
+              tintColor="#ffffff"
+              colors={['#ffffff']}
             />
           }
         />
       )}
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000000',
   },
   header: {
     paddingHorizontal: 16,
@@ -156,10 +146,6 @@ const styles = StyleSheet.create({
     color: '#ffffff',
     textAlign: 'center',
     marginBottom: 8,
-    textShadowColor: '#ffffff',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,
@@ -168,12 +154,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   clearButton: {
-    borderRadius: 20,
-    overflow: 'hidden',
-  },
-  clearButtonGradient: {
+    backgroundColor: '#ffffff',
     paddingHorizontal: 16,
     paddingVertical: 8,
+    borderRadius: 8,
   },
   clearButtonText: {
     color: '#000000',
@@ -190,9 +174,12 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     borderRadius: 60,
+    backgroundColor: '#1a1a1a',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
+    borderWidth: 1,
+    borderColor: '#333333',
   },
   emptyTitle: {
     fontSize: 24,

@@ -1,8 +1,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { MovieDetails, MovieResponse } from '../../utils/types';
 
-const API_KEY = 'df782bc195e54779c69a7940d5d88471'; 
-const BASE_URL = 'https://api.themoviedb.org/3';
+const API_KEY = process.env.REACT_APP_TMDB_API_KEY;
+const BASE_URL = process.env.REACT_APP_TMDB_BASE_URL;
 
 export const movieApi = createApi({
   reducerPath: 'movieApi',

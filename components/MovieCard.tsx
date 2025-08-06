@@ -1,7 +1,5 @@
-// Updated components/MovieCard.tsx with larger card sizes to show full images
-
+// components/MovieCard.tsx - Complete code with red heart
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import {
   Image,
@@ -81,16 +79,16 @@ const MovieCard: React.FC<MovieCardProps> = ({ movie, onPress, size = 'medium' }
           onPress={handleFavoritePress} 
           style={styles.favoriteButton}
         >
-          <LinearGradient
-            colors={isFavorite ? ['#ff6b9d', '#4ecdc4'] : ['rgba(255,255,255,0.2)', 'rgba(255,255,255,0.1)']}
-            style={styles.favoriteGradient}
-          >
+          <View style={[
+            styles.favoriteGradient,
+            isFavorite && styles.favoriteActive
+          ]}>
             <Ionicons
               name={isFavorite ? 'heart' : 'heart-outline'}
               size={18}
-              color="white"
+              color={isFavorite ? '#FFFFFF' : '#FFFFFF'}
             />
-          </LinearGradient>
+          </View>
         </TouchableOpacity>
       </View>
       
@@ -149,6 +147,13 @@ const styles = StyleSheet.create({
     height: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'rgba(0,0,0,0.7)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.3)',
+  },
+  favoriteActive: {
+    backgroundColor: '#FF1744', // Red background when liked
+    borderColor: '#FF5722', // Slightly lighter red border
   },
   movieInfo: {
     padding: 12,

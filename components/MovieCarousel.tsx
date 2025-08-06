@@ -1,5 +1,3 @@
-// Fixed components/MovieCarousel.tsx - Clean gradient text without background
-
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React from 'react';
@@ -39,11 +37,11 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies, title, icon, load
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          {icon && <Ionicons name={icon as any} size={20} color="#ff6b9d" style={styles.titleIcon} />}
+          {icon && <Ionicons name={icon as any} size={20} color="#ffffff" style={styles.titleIcon} />}
           <Text style={styles.sectionTitle}>{title}</Text>
         </View>
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color="#ff6b9d" />
+          <ActivityIndicator size="large" color="#ffffff" />
           <Text style={styles.loadingText}>Loading movies...</Text>
         </View>
       </View>
@@ -54,7 +52,7 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies, title, icon, load
     return (
       <View style={styles.container}>
         <View style={styles.titleContainer}>
-          {icon && <Ionicons name={icon as any} size={20} color="#ff6b9d" style={styles.titleIcon} />}
+          {icon && <Ionicons name={icon as any} size={20} color="#ffffff" style={styles.titleIcon} />}
           <Text style={styles.sectionTitle}>{title}</Text>
         </View>
         <View style={styles.emptyContainer}>
@@ -67,7 +65,7 @@ const MovieCarousel: React.FC<MovieCarouselProps> = ({ movies, title, icon, load
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
-        {icon && <Ionicons name={icon as any} size={20} color="#ff6b9d" style={styles.titleIcon} />}
+        {icon && <Ionicons name={icon as any} size={20} color="#ffffff" style={styles.titleIcon} />}
         <Text style={styles.sectionTitle}>{title}</Text>
       </View>
       

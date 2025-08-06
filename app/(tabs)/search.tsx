@@ -1,6 +1,3 @@
-// Fixed app/(tabs)/search.tsx - Changed to dark theme like other tabs
-
-import { LinearGradient } from 'expo-linear-gradient';
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import {
@@ -40,10 +37,10 @@ export default function SearchScreen() {
   };
 
   return (
-    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header - Dark theme with gradient text effect */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Search</Text>
         <Text style={styles.headerSubtitle}>Find your next favorite film</Text>
@@ -65,8 +62,8 @@ export default function SearchScreen() {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={handleRefresh}
-            tintColor="#ff6b9d"
-            colors={['#ff6b9d']}
+            tintColor="#ffffff"
+            colors={['#ffffff']}
           />
         }
       >
@@ -90,13 +87,14 @@ export default function SearchScreen() {
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000000',
   },
   header: {
     paddingHorizontal: 16,
@@ -112,10 +110,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#ffffff',
     marginBottom: 8,
-    textShadowColor: '#ffffff',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,

@@ -1,7 +1,4 @@
-// Fixed app/(tabs)/profile.tsx - Changed to dark theme like other tabs
-
 import { Ionicons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
 import { useRouter } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
@@ -38,7 +35,7 @@ const ProfileOption: React.FC<ProfileOptionProps> = ({
         <Ionicons 
           name={icon} 
           size={24} 
-          color={destructive ? '#ff6b9d' : '#4ecdc4'} 
+          color={destructive ? '#ffffff' : '#ffffff'} 
         />
       </View>
       <View style={styles.optionText}>
@@ -128,10 +125,10 @@ export default function ProfileScreen() {
   }
 
   return (
-    <LinearGradient colors={['#000000', '#111111']} style={styles.container}>
+    <View style={styles.container}>
       <StatusBar style="light" backgroundColor="#000000" />
       
-      {/* Header - Dark theme with gradient text effect */}
+      {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Profile</Text>
         <Text style={styles.headerSubtitle}>Manage your account</Text>
@@ -140,25 +137,19 @@ export default function ProfileScreen() {
       <ScrollView style={styles.content} showsVerticalScrollIndicator={false}>
         {/* User Info Card */}
         <View style={styles.userCard}>
-          <LinearGradient
-            colors={['#ff6b9d', '#4ecdc4']}
-            style={styles.avatarContainer}
-          >
-            <Ionicons name="person" size={40} color="white" />
-          </LinearGradient>
+          <View style={styles.avatarContainer}>
+            <Ionicons name="person" size={40} color="black" />
+          </View>
           
           <View style={styles.userInfo}>
             <Text style={styles.userName}>{user?.name || 'Movie Lover'}</Text>
             <Text style={styles.userEmail}>{user?.email || 'user@example.com'}</Text>
             <View style={styles.favoriteCountContainer}>
-              <LinearGradient
-                colors={['#4ecdc4', '#ff6b9d']}
-                style={styles.favoriteCountBadge}
-              >
+              <View style={styles.favoriteCountBadge}>
                 <Text style={styles.favoriteCount}>
                   {favoriteMovies.length} favorite{favoriteMovies.length !== 1 ? 's' : ''}
                 </Text>
-              </LinearGradient>
+              </View>
             </View>
           </View>
         </View>
@@ -224,13 +215,14 @@ export default function ProfileScreen() {
         
         <View style={styles.bottomSpacing} />
       </ScrollView>
-    </LinearGradient>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#000000',
   },
   header: {
     paddingHorizontal: 16,
@@ -245,10 +237,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: '#ffffff',
     marginBottom: 8,
-    textShadowColor: '#ffffff',
-    textShadowOffset: { width: 0, height: 0 },
-    textShadowRadius: 10,
-    elevation: 5,
   },
   headerSubtitle: {
     fontSize: 16,
@@ -272,6 +260,7 @@ const styles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
+    backgroundColor: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
@@ -294,13 +283,14 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   favoriteCountBadge: {
+    backgroundColor: '#ffffff',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 15,
   },
   favoriteCount: {
     fontSize: 12,
-    color: 'white',
+    color: '#000000',
     fontWeight: '600',
   },
   section: {
@@ -341,7 +331,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
   },
   destructiveIcon: {
-    backgroundColor: '#2a1a1a',
+    backgroundColor: '#2a2a2a',
   },
   optionText: {
     flex: 1,
@@ -353,7 +343,7 @@ const styles = StyleSheet.create({
     marginBottom: 2,
   },
   destructiveText: {
-    color: '#ff6b9d',
+    color: '#ffffff',
   },
   optionSubtitle: {
     fontSize: 14,
